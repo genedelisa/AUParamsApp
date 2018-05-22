@@ -1,0 +1,25 @@
+language:objective-c
+osx_image:xcode9.2
+xcode_project:AUParamsApp
+
+before_install:
+- brew update
+- brew outdated xctool || brew upgrade xctool
+- gem install xcpretty -N
+- brew install swiftlint || true
+
+install: bundle install --without=documentation --path ../travis_bundle_dir
+
+# - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
+# - gem install slather --no-rdoc --no-ri --no-document --quiet
+# - cd AUParamsApp && pod install
+
+script:
+- xctool -project AUParamsApp.xcodeproj  -scheme "AUParamsApp" -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6" ONLY_ACTIVE_ARCH=NO test | xcpretty -c
+- swiftlint
+
+after_success:
+- bash <(curl -s https://codecov.io/bash) -J 'AUParamsApp'
+# - cd $TRAVIS_BUILD_DIR && slather
+
+# http://docs.travis-ci.com/user/languages/objective-c/

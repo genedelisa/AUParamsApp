@@ -1,0 +1,18 @@
+module: AUParamsApp
+author: Gene De Lisa
+author_url: http://rockhoppertech.com/blog/
+github_url: http://github.com/genedelisa/AUParamsApp
+copyright: "2018 © Gene De Lisa. See [LICENSE](LICENSE) for more details. [Rockhopper Technologies](http://rockhoppertech.com/)"
+min_acl: private
+clean: true
+readme: ./README.md
+output: docs/swiftDocs
+sdk: iphone
+
+# skip_undocumented: true
+hide_documentation_coverage: false
+
+# swift_version: 4.0
+# xcodebuild-arguments: -scheme,MIDISynth
+
+

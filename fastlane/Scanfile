@@ -1,0 +1,6 @@
+scheme "AUParamsApp"
+clean true
+code_coverage true
+device "iPhone 7"
+skip_slack true
+slack_only_on_failure true
