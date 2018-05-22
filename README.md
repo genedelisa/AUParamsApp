@@ -5,17 +5,12 @@
 [![GitHub tag](https://img.shields.io/github/tag/genedelisa/AUParamsApp.svg)](https://github.com/genedelisa/AUParamsApp/)
 [![GitHub release](https://img.shields.io/github/release/genedelisa/AUParamsApp.svg)](https://github.com/genedelisa/AUParamsApp/)
 [![GitHub commits](https://img.shields.io/github/commits-since/genedelisa/AUParamsApp/1.0.0.svg)
-[![GitHub version](https://badge.fury.io/gh/genedelisa%2FAUParamsApp)](https://github.com/genedelisa/AUParamsApp)
 [![GitHub stars](https://img.shields.io/github/stars/genedelisa/AUParamsApp.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/genedelisa/AUParamsApp/stargazers/)
 
-[![Swift 2](https://img.shields.io/badge/swift2-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/swift)
-
-[![Swift 3](https://img.shields.io/badge/swift3-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/swift)
-
+[![C++](https://img.shields.io/badge/c++-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/swift)
+[![Objective-C](https://img.shields.io/badge/objective-c-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/swift)
 [![Swift 4](https://img.shields.io/badge/swift4-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/swift)
 
-[![Platforms macOS | iOS](https://img.shields.io/badge/Platforms-OS%20X%20%7C%20iOS-lightgray.svg?style=flat)](https://swift.org/)
-[![Platforms macOS](https://img.shields.io/badge/Platforms-OS%20X-lightgray.svg?style=flat)](https://swift.org/)
 [![Platforms iOS](https://img.shields.io/badge/Platforms-iOS-lightgray.svg?style=flat)](https://swift.org/)
 
 [![Sponsors](https://img.shields.io/badge/Sponsors-Rockhopper%20Technologies-orange.svg?style=flat)](http://www.rockhoppertech.com/)
@@ -23,12 +18,12 @@
 
 
 
-An example using
+An example showing how to use AUParameters in an AUv3 Audio Unit.
 
 
 ## Blog post for this example.
 
-[Blog post](http://www.rockhoppertech.com/blog/)
+[Blog post](http://www.rockhoppertech.com/blog/audio-units-auv3-parameters-part-1/)
 
 
 ## Bugs
