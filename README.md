@@ -7,9 +7,9 @@
 [![GitHub commits](https://img.shields.io/github/commits-since/genedelisa/AUParamsApp/1.0.0.svg)
 [![GitHub stars](https://img.shields.io/github/stars/genedelisa/AUParamsApp.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/genedelisa/AUParamsApp/stargazers/)
 
-[![C++](https://img.shields.io/badge/c++-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/documentation/objectivec)
+[![C++](https://img.shields.io/badge/C%2B%2B-compatible-brightgreen.svg?style=flat")](https://developer.apple.com/)
 [![Objective-C](https://img.shields.io/badge/Objective--C-compatible-brightgreen.svg?style=flat")](https://developer.apple.com/documentation/objectivec)
-[![Swift 4](https://img.shields.io/badge/swift4-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/)
+[![Swift 4](https://img.shields.io/badge/Swift%204-compatible-brightgreen.svg?style=flat")](https://developer.apple.com/)
 
 [![Platforms iOS](https://img.shields.io/badge/Platforms-iOS-lightgray.svg?style=flat)](https://swift.org/)
 
@@ -18,7 +18,7 @@
 
 
 
-An example showing how to use AUParameters in an AUv3 Audio Unit.
+An example showing how to use AUParameters in an AUv3 Audio Unit. This is a MIDI extension.
 
 
 ## Blog post for this example.
