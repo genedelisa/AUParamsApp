@@ -24,6 +24,10 @@
 		B071D77A20B450E00029E995 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B071D77820B450E00029E995 /* MainInterface.storyboard */; };
 		B071D77F20B450E00029E995 /* AUParamsPlugin.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B071D77120B450E00029E995 /* AUParamsPlugin.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B071D78320B45F8E0029E995 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05D9A2620B3715100AC459F /* AVFoundation.framework */; };
+		B071D78520B4A2BF0029E995 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B071D78420B4A2BF0029E995 /* AudioToolbox.framework */; };
+		B071D78620B4A2C90029E995 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B071D78420B4A2BF0029E995 /* AudioToolbox.framework */; };
+		B071D78720B4A2DA0029E995 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B071D78420B4A2BF0029E995 /* AudioToolbox.framework */; };
+		B071D78820B4A2E10029E995 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05D9A2620B3715100AC459F /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +120,7 @@
 		B071D77920B450E00029E995 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B071D77B20B450E00029E995 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B071D77C20B450E00029E995 /* AUParamsPlugin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AUParamsPlugin-Bridging-Header.h"; sourceTree = "<group>"; };
+		B071D78420B4A2BF0029E995 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +128,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B071D78820B4A2E10029E995 /* AVFoundation.framework in Frameworks */,
+				B071D78720B4A2DA0029E995 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B071D78520B4A2BF0029E995 /* AudioToolbox.framework in Frameworks */,
 				B05D9A2720B3715200AC459F /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,6 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B071D78620B4A2C90029E995 /* AudioToolbox.framework in Frameworks */,
 				B071D78320B45F8E0029E995 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +268,7 @@
 		B05D9A2520B3715100AC459F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B071D78420B4A2BF0029E995 /* AudioToolbox.framework */,
 				B05D9A2620B3715100AC459F /* AVFoundation.framework */,
 			);
 			name = Frameworks;

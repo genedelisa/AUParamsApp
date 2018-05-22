@@ -85,8 +85,10 @@ public class AudioUnitViewController: AUViewController, AUAudioUnitFactory {
             NSLog("connecting UI in create audio unit")
             connectUIToAudioUnit()
         }
+
         return audioUnit!
     }
+
     
     func connectUIToAudioUnit() {
         NSLog("\(#function)")
@@ -127,6 +129,18 @@ public class AudioUnitViewController: AUViewController, AUAudioUnitFactory {
         })
     }
     
+    @IBAction func intervalSliderValueChangedAction(_ sender: UISlider) {
+        guard let theAudioUnit = audioUnit as? AUParamsAudioUnit,
+            let intervalParameter =
+            theAudioUnit.parameterTree?.parameter(withAddress: AUParameterAddress(intervalParameter))
+            else {
+                NSLog("could not get the audio unit or the parameter in \(#function)")
+                return
+        }
+        
+        intervalParameter.setValue(sender.value, originator: parameterObserverToken)
+    }
+
     @IBAction func intervalValueChanged(_ sender: UISegmentedControl) {
         
         var interval: AUValue = 0
@@ -146,8 +160,10 @@ public class AudioUnitViewController: AUViewController, AUAudioUnitFactory {
         case 11: interval = 12
         default: break
         }
-        self.intervalAUParameter?.value = interval
-        
+
+        //or  self.intervalAUParameter?.value = interval
+        self.intervalAUParameter?.setValue(interval, originator: parameterObserverToken)
+
         if let p = self.intervalAUParameter {
             NSLog("intervalParam: \(String(describing: p))")
             let s = p.string(fromValue: &p.value)

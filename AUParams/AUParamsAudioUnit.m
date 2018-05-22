@@ -54,8 +54,7 @@
 
 
 // Define parameter addresses.
-const AudioUnitParameterID myParam1 = 0;
-const AudioUnitParameterID intervalParameter = 1;
+const AudioUnitParameterID intervalParameter = 0;
 
 @interface AUParamsAudioUnit ()
 
@@ -75,28 +74,28 @@ const AudioUnitParameterID intervalParameter = 1;
 @synthesize inputBusArray = _inputBusArray;
 @synthesize outputBusArray = _outputBusArray;
 
-// C++ members need to be ivars; they would be copied on access if they were properties.
-//IntervalPlugin *_intervalPlugin;
-
 AUParameter *intervalParam;
 NSArray<NSString *> *intervalNames;
 
 AudioStreamBasicDescription asbd;
 
-BOOL hasMIDIOutput = YES;
-
-BOOL musicDeviceOrEffect = YES;
-
 AUHostMusicalContextBlock _musicalContext;
 AUMIDIOutputEventBlock _outputEventBlock;
 AUHostTransportStateBlock _transportStateBlock;
 AUScheduleMIDIEventBlock _scheduleMIDIEventBlock;
+
 - (instancetype)initWithComponentDescription:(AudioComponentDescription)componentDescription options:(AudioComponentInstantiationOptions)options error:(NSError **)outError {
     self = [super initWithComponentDescription:componentDescription options:options error:outError];
     
     if (self == nil) {
         return nil;
     }
+    
+//    super.supportsMPE = NO;
+//
+//    self.hasMIDIOutput = YES;
+//
+//    self.musicDeviceOrEffect = YES;
     
     [self createBusses];
     
@@ -151,12 +150,6 @@ AUScheduleMIDIEventBlock _scheduleMIDIEventBlock;
     NSLog(@"calling: %s", __PRETTY_FUNCTION__ );
 
     AudioUnitParameterOptions flags = kAudioUnitParameterFlag_IsWritable | kAudioUnitParameterFlag_IsReadable;
-
-    // Create parameter objects.
-    AUParameter *param1 = [AUParameterTree createParameterWithIdentifier:@"param1" name:@"Parameter 1" address:myParam1 min:0 max:100 unit:kAudioUnitParameterUnit_Percent unitName:nil flags:0 valueStrings:nil dependentParameters:nil];
-    
-    // Initialize the parameter values.
-    param1.value = 0.5;
     
     intervalNames =
     [NSArray arrayWithObjects: @"Unison", @"Minor Second", @"Major Second", @"Minor Third", @"Major Third", @"Fourth", @"Tritone", @"Fifth", @"Minor Sixth", @"Sixth", @"Minor Seventh", @"Seventh", @"Octave", nil];
@@ -165,39 +158,30 @@ AUScheduleMIDIEventBlock _scheduleMIDIEventBlock;
                                                               name: @"Interval"
                                                            address:intervalParameter
                                                                min: 0
-                                                               max: 24
+                                                               max: 12
                                                               unit: kAudioUnitParameterUnit_Indexed
                                                           unitName: nil
                                                              flags: flags | kAudioUnitParameterFlag_ValuesHaveStrings
                                                       valueStrings: intervalNames
                                                dependentParameters: nil];
     
-
-    
-
-
     // Create the parameter tree.
-    _parameterTree = [AUParameterTree createTreeWithChildren:@[ param1, intervalParam ]];
-    
-    // Create the input and output busses (AUAudioUnitBus).
-    // Create the input and output bus arrays (AUAudioUnitBusArray).
+    _parameterTree = [AUParameterTree createTreeWithChildren:@[ intervalParam ]];
     
     // A function to provide string representations of parameter values.
     _parameterTree.implementorStringFromValueCallback = ^(AUParameter *param, const AUValue *__nullable valuePtr) {
 
         AUValue value = valuePtr == nil ? param.value : *valuePtr;
-        
+
         switch (param.address) {
-            case myParam1:
-                return [NSString stringWithFormat:@"%.f", value];
-                
+
             case intervalParameter:
-                
+
                 if (value > [intervalNames count]) {
                     return @"default value string";
                 }
                 return intervalNames[(int)value];
-                
+
             default:
                 return @"?";
         }

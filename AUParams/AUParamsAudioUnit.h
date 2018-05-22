@@ -51,7 +51,6 @@
 //#import "IntervalPlugin.hpp"
 
 // Define parameter addresses.
-extern const AudioUnitParameterID myParam1;
 extern const AudioUnitParameterID intervalParameter;
 
 @interface AUParamsAudioUnit : AUAudioUnit
