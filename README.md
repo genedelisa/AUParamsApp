@@ -7,9 +7,9 @@
 [![GitHub commits](https://img.shields.io/github/commits-since/genedelisa/AUParamsApp/1.0.0.svg)
 [![GitHub stars](https://img.shields.io/github/stars/genedelisa/AUParamsApp.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/genedelisa/AUParamsApp/stargazers/)
 
-[![C++](https://img.shields.io/badge/c++-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/swift)
-[![Objective-C](https://img.shields.io/badge/objective-c-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/swift)
-[![Swift 4](https://img.shields.io/badge/swift4-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/swift)
+[![C++](https://img.shields.io/badge/c++-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/documentation/objectivec)
+[![Objective-C](https://img.shields.io/badge/objective-c-compatible.svg?style=flat")](https://developer.apple.com/documentation/objectivec)
+[![Swift 4](https://img.shields.io/badge/swift4-compatible-4BC51D.svg?style=flat")](https://developer.apple.com/)
 
 [![Platforms iOS](https://img.shields.io/badge/Platforms-iOS-lightgray.svg?style=flat)](https://swift.org/)
 
