@@ -135,7 +135,7 @@ AUScheduleMIDIEventBlock _scheduleMIDIEventBlock;
           kAudioFormatFlagsNativeFloatPacked);
     
     _intervalPlugin = new IntervalPlugin();
-    
+
     _inputBus = [[AUAudioUnitBus alloc]
                  initWithFormat:defaultFormat error:nil];
     _outputBus = [[AUAudioUnitBus alloc]
@@ -357,14 +357,14 @@ AUScheduleMIDIEventBlock _scheduleMIDIEventBlock;
         pluginCapture->processRenderEvents(realtimeEventListHead);
         
         BOOL transportStateIsMoving = NO;
-        if ( _musicalContext ) {
+        if ( _musicalContextCapture ) {
             double timeSignatureNumerator;
             NSInteger timeSignatureDenominator;
             double currentBeatPosition;
             NSInteger sampleOffsetToNextBeat;
             double currentMeasureDownbeatPosition;
             
-            if (_musicalContext( &currentTempo, &timeSignatureNumerator, &timeSignatureDenominator, &currentBeatPosition, &sampleOffsetToNextBeat, &currentMeasureDownbeatPosition ) ) {
+            if (_musicalContextCapture( &currentTempo, &timeSignatureNumerator, &timeSignatureDenominator, &currentBeatPosition, &sampleOffsetToNextBeat, &currentMeasureDownbeatPosition ) ) {
                 
                 samplesPerSecond = 60.0 / currentTempo * asbd.mSampleRate;
                 

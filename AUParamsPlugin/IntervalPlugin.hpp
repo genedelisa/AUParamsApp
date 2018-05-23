@@ -58,11 +58,6 @@
 using namespace std;
 
 
-//#import <Foundation/Foundation.h>
-//#import <AVFoundation/AVFoundation.h>
-//#import <AudioToolbox/AudioToolbox.h>
-//#import <algorithm>
-
 class IntervalPlugin {
 private:
     AUHostMusicalContextBlock musicalContext;
@@ -70,40 +65,6 @@ private:
     AUHostTransportStateBlock transportStateBlock;
     AUScheduleMIDIEventBlock scheduleMIDIEventBlock;
     double tempo;
-
-    list <int> channelList;
-
-    list <AUMIDIEvent> midiEventList;
-
-    void addMIDIEvent(AUMIDIEvent event) {
-        midiEventList.push_front(event);
-    }
-
-    void showMIDIEvents(list <AUMIDIEvent> g) {
-        list <AUMIDIEvent> :: iterator it;
-        //uint8_t *data[3];
-
-        for(it = g.begin(); it != g.end(); ++it) {
-            NSLog(@"eventSampleTime %lld", it->eventSampleTime);
-//            data = *it->data;
-            uint8_t status = it->data[0] & 0xF0;
-            uint8_t channel = it->data[1] & 0x0F;
-            NSLog(@"Event %d Channel %d", status, channel);
-        }
-        cout << '\n';
-    }
-
-    void showlist(list <int> g) {
-        list <int> :: iterator it;
-        for(it = g.begin(); it != g.end(); ++it)
-            cout << '\t' << *it;
-        cout << '\n';
-    }
-    void addChannel(int channel) {
-        channelList.push_front(channel);
-    }
-    
-
     
 public:
     IntervalPlugin() {
@@ -131,25 +92,22 @@ public:
         
         NSLog(@"parameter address %llu value %f", parameterEvent.parameterAddress,
               parameterEvent.value);
-        
     }
     
     void handleMIDIEvent(AUMIDIEvent const& midiEvent) {
-        NSLog(@"calling: %s", __PRETTY_FUNCTION__ );
+        //NSLog(@"calling: %s", __PRETTY_FUNCTION__ );
+        
         OSStatus osstatus = noErr;
         uint8_t midiStatus = (midiEvent.data[0] & 0xF0);
-        uint8_t channel = midiEvent.data[0] & 0x0F;
+        //uint8_t channel = midiEvent.data[0] & 0x0F;
         uint8_t data1 = midiEvent.data[1];
         uint8_t data2 = midiEvent.data[2];
-        AUEventSampleTime when = midiEvent.eventSampleTime;
-        uint16_t length = midiEvent.length;
-        NSLog(@" when %lld message %d", when, midiStatus);
-        cout << "channel " << channel << endl;
+        //AUEventSampleTime when = midiEvent.eventSampleTime;
+        //uint16_t length = midiEvent.length;
+
         uint8_t bytes[3];
-        uint8_t interval = 4;
-        cout << "interval " << interval << endl;
         
-        this->addMIDIEvent(midiEvent);
+        uint8_t interval = 4;
         
         if (this->outputEventBlock) {
             // send back the original unchanged
@@ -164,7 +122,7 @@ public:
             bytes[2] = data2;
             if (midiStatus == 0x90 && data2 != 0) {
                 bytes[1] = data1 + interval;
-                this->outputEventBlock(AUEventSampleTimeImmediate, 0, 3, bytes);
+                this->outputEventBlock(AUEventSampleTimeImmediate, midiEvent.cable, 3, bytes);
             }
             
             // note off
@@ -173,71 +131,30 @@ public:
             bytes[2] = 0;
             if (midiStatus == 0x90 && data2 == 0) {
                 bytes[1] = data1 + interval;
-                this->outputEventBlock(AUEventSampleTimeImmediate, 0, 3, bytes);
+                this->outputEventBlock(AUEventSampleTimeImmediate, midiEvent.cable, 3, bytes);
             }
             
-            //                        osstatus = this->outputEventBlock(midiEvent.eventSampleTime + samplesPerSecond, midiEvent.cable, midiEvent.length, midiEvent.data);
-            //                        if (osstatus != noErr) {
-            //                            NSLog(@"Error sending midi mess %d", osstatus);
-            //                        }
         }
         
     }
     
     void processRenderEvents(const AURenderEvent *realtimeEventListHead) {
-        NSLog(@"calling: %s", __PRETTY_FUNCTION__ );
+        //NSLog(@"calling: %s", __PRETTY_FUNCTION__ );
 
         const AURenderEvent* event = realtimeEventListHead;
-        AUMIDIEvent midiEvent;
-        AUParameterEvent parameterEvent;
-        OSStatus osstatus = noErr;
-        AUAudioFrameCount framesThisSegment = 0;
-        AUEventSampleTime now = 0;
         
         while (event != NULL) {
             switch (realtimeEventListHead->head.eventType) {
                 case AURenderEventParameter:
                 case AURenderEventParameterRamp:
-                    parameterEvent = event->parameter;
-                    //parameterEvent.parameterAddress
-                    this->handleParameterEvent(parameterEvent);
+                    this->handleParameterEvent(event->parameter);
                     break;
                     
                 case AURenderEventMIDI:
-                    
-                    framesThisSegment = (AUAudioFrameCount)(event->head.eventSampleTime - now);
-                    //now += framesThisSegment;
-                    //midiSampleOffset += framesThisSegment;
-                    //if (midiSampleOffset >= frameCount) break;
-
                     this->handleMIDIEvent(event->MIDI);
-                    
-                    //midiEvent = event->MIDI;
-                    //                    uint8_t midiStatus = (midiEvent.data[0] & 0xF0);
-                    //                    uint8_t channel = midiEvent.data[0] & 0x0F;
-                    //                    uint8_t data1 = midiEvent.data[1];
-                    //                    uint8_t data2 = midiEvent.data[2];
-                    //                    AUEventSampleTime when = midiEvent.eventSampleTime;
-                    //                    uint16_t length = midiEvent.length;
-                    //                    NSLog(@" when %lld message %d", when, midiStatus);
-                    
-//                    if (this->outputEventBlock) {
-//                        // send back the original unchanged
-//                        osstatus = this->outputEventBlock(midiEvent.eventSampleTime, midiEvent.cable, midiEvent.length, midiEvent.data);
-//                        if (osstatus != noErr) {
-//                            NSLog(@"Error sending midi mess %d", osstatus);
-//                        }
-//
-//                        //                        osstatus = this->outputEventBlock(midiEvent.eventSampleTime + samplesPerSecond, midiEvent.cable, midiEvent.length, midiEvent.data);
-//                        //                        if (osstatus != noErr) {
-//                        //                            NSLog(@"Error sending midi mess %d", osstatus);
-//                        //                        }
-//                    }
-                    
                     break;
                     
                 case AURenderEventMIDISysEx:
-                    
                     break;
             }
             
