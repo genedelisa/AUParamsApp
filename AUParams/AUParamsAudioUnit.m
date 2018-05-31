@@ -187,10 +187,23 @@ AUScheduleMIDIEventBlock _scheduleMIDIEventBlock;
         }
     };
     
+    // implementorValueObserver is called when a parameter changes value.
+    _parameterTree.implementorValueObserver = ^(AUParameter *param, AUValue value) {
+
+        switch (param.address) {
+            case intervalParameter:
+            default: break;
+        }
+
+    };
+
+    
     // can do this
     intervalParam.value = 4;
 //    // or this
 //    [_parameterTree parameterWithAddress:intervalParameter].value = 4;
+    
+   
     
 }
 - (void) setInterval:(int) value {
