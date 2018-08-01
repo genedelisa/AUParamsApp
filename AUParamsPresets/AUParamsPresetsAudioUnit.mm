@@ -95,13 +95,20 @@ static const FactoryPresetParameters presetParameters[kNumberOfPresets] = {
 
 @implementation AUParamsPresetsAudioUnit {
     // C++ members need to be ivars; they would be copied on access if they were properties.
-    IntervalPlugin *_intervalPlugin;
+    IntervalPlugin                *_intervalPlugin;
     
-    AUParameter *intervalParam;
+    AUParameter                  *intervalParam;
     
-    AUAudioUnitPreset *_currentPreset;
-    NSInteger _currentFactoryPresetIndex;
+    AUAudioUnitPreset            *_currentPreset;
+    NSInteger                    _currentFactoryPresetIndex;
     NSArray<AUAudioUnitPreset *> *_presets;
+    
+    AudioStreamBasicDescription  asbd;
+    
+    AUHostMusicalContextBlock    _musicalContext;
+    AUMIDIOutputEventBlock       _outputEventBlock;
+    AUHostTransportStateBlock    _transportStateBlock;
+    AUScheduleMIDIEventBlock     _scheduleMIDIEventBlock;
 }
 
 @synthesize parameterTree = _parameterTree;
@@ -116,12 +123,6 @@ static const FactoryPresetParameters presetParameters[kNumberOfPresets] = {
 //NSArray<AUAudioUnitPreset *> *_presets;
 //@synthesize factoryPresets = _presets;
 
-AudioStreamBasicDescription asbd;
-
-AUHostMusicalContextBlock _musicalContext;
-AUMIDIOutputEventBlock _outputEventBlock;
-AUHostTransportStateBlock _transportStateBlock;
-AUScheduleMIDIEventBlock _scheduleMIDIEventBlock;
 
 - (instancetype)initWithComponentDescription:(AudioComponentDescription)componentDescription options:(AudioComponentInstantiationOptions)options error:(NSError **)outError {
     self = [super initWithComponentDescription:componentDescription options:options error:outError];
@@ -251,12 +252,8 @@ AUScheduleMIDIEventBlock _scheduleMIDIEventBlock;
 
 }
 
-- (AUAudioUnitPreset*)createPreset:(NSInteger)number name:(NSString*)name {
-    AUAudioUnitPreset* newPreset = [AUAudioUnitPreset new];
-    newPreset.name = name;
-    newPreset.number = number;
-    return newPreset;
-}
+
+
 
 //- (void) setupFactoryPresets {
 //    NSMutableArray* presetItems = [NSMutableArray new];
@@ -308,6 +305,44 @@ AUScheduleMIDIEventBlock _scheduleMIDIEventBlock;
 
 
 #pragma mark - AUAudioUnit Presets
+
+- (AUAudioUnitPreset*)createPreset:(NSInteger)number name:(NSString*)name {
+    AUAudioUnitPreset* newPreset = [AUAudioUnitPreset new];
+    newPreset.name = name;
+    newPreset.number = number;
+    return newPreset;
+}
+
+// this property is inherited
+// @property (NS_NONATOMIC_IOSONLY, copy, nullable) NSDictionary<NSString *, id> *fullState;
+
+
+// called when you save a new preset. e.g. in AUM press the + in the Presets title bar
+- (NSDictionary<NSString *,id> *)fullState {
+    NSLog(@"calling: %s", __PRETTY_FUNCTION__ );
+    
+    NSMutableDictionary *state = [[NSMutableDictionary alloc] initWithDictionary:super.fullState];
+    // this will contain manufacturer, data, type, subtype, and version
+    
+    // you can do just a setObject:forKey on state, but in real life you will probably have many parameters.
+    // so, add a param dictionary to fullState.
+    
+    NSDictionary<NSString*, id> *params = @{
+                                            @"intervalParameter": [NSNumber numberWithInt: intervalParam.value],
+                                            };
+
+    state[@"fullStateParams"] = [NSKeyedArchiver archivedDataWithRootObject: params];
+    return state;
+}
+
+// called when the user preset is selected
+- (void)setFullState:(NSDictionary<NSString *,id> *)fullState {
+    NSLog(@"calling: %s", __PRETTY_FUNCTION__ );
+
+    NSData *data = (NSData *)fullState[@"fullStateParams"];
+    NSDictionary *params = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    intervalParam.value = [(NSNumber *)params[@"intervalParameter"] intValue];
+}
 
 - (AUAudioUnitPreset *)currentPreset {
     NSLog(@"calling: %s", __PRETTY_FUNCTION__ );

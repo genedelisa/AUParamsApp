@@ -50,10 +50,9 @@
 import CoreAudioKit
 
 public class AudioUnitViewController: AUViewController, AUAudioUnitFactory {
-//    var audioUnit: AUAudioUnit?
     
     /*
-     When this view controller is instantiated within the FilterDemoApp, its
+     When this view controller is instantiated within the Containing App, its
      audio unit is created independently, and passed to the view controller here.
      */
     public var audioUnit: AUAudioUnit? {
